@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>PAREXX SHOP ALL GAME | Gusion Assassin Hub</title>
+  <meta name="description" content="Jelajahi portal top-up game terpopuler di Indonesia yang tersambung langsung secara real-time dengan Codashop API. Nikmati visual premium 3D Gusion Mobile Legends.">
+  <meta name="keywords" content="Codashop, Gusion, Mobile Legends, MLBB, Top Up, Diamond ML, Free Fire, Valorant, Codashop API, 3D WebGL, Three.js">
+  <meta name="author" content="Antigravity Coding Assistant">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost/api%203/">
+  <meta property="og:title" content="PAREXX SHOP ALL GAME - Catalog Top-Up Codashop ID">
+  <meta property="og:description" content="Visual interaktif 3D Gusion Mobile Legends berpadu dengan data top-up game real-time dari Codashop Indonesia.">
+  <meta property="og:image" content="assets/gusion_default.png">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="https://www.codashop.com/favicon.ico" type="image/x-icon">
+
+  <!-- Style Sheets & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="skin-kof">
+
+  <!-- ==========================================================================
+       INTERACTIVE WEBGL BACKGROUND CANVAS & OVERLAYS
+       ========================================================================== -->
+  <div id="webgl-background"></div>
+  <div class="ambient-gradient-overlay"></div>
+
+  <!-- ==========================================================================
+       GUSION 3D PARALLAX OVERLAYS (Floating skins and daggers)
+       ========================================================================== -->
+  <div class="gusion-parallax-container" id="gusionParallax">
+    <div class="gusion-character-wrapper">
+      <div class="gusion-aura"></div>
+      
+      <!-- Loaded Gusion skins (Only active skin is visible) -->
+      <img src="assets/gusion_default.png" alt="Gusion Default Skin" class="gusion-img" id="skin-img-default">
+      <img src="assets/gusion_cosmic.png" alt="Gusion Cosmic Gleam Skin" class="gusion-img" id="skin-img-cosmic">
+      <img src="assets/gusion_kof.jpg" alt="Gusion K' Skin" class="gusion-img active" id="skin-img-kof">
+      
+      <!-- Glowing flying daggers -->
+      <img src="https://cdn1.codashop.com/S/content/mobile/images/product-tiles/MLBB-2025-tiles-178x178.jpg" alt="Blade Spark" class="gusion-dagger gusion-dagger-1" style="display: none;"> <!-- Dynamic vector fallback -->
+      
+      <!-- Custom vector dagger elements using SVGs for premium rendering -->
+      <svg class="gusion-dagger gusion-dagger-1" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 5L58 35L88 35L64 53L73 83L50 65L27 83L36 53L12 35L42 35L50 5Z" fill="url(#dagger-gradient-cyan)"/>
+        <defs>
+          <radialGradient id="dagger-gradient-cyan" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+            <stop offset="40%" stop-color="var(--primary)" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+      </svg>
+
+      <svg class="gusion-dagger gusion-dagger-2" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 5L58 35L88 35L64 53L73 83L50 65L27 83L36 53L12 35L42 35L50 5Z" fill="url(#dagger-gradient-glow)"/>
+        <defs>
+          <radialGradient id="dagger-gradient-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+            <stop offset="40%" stop-color="var(--primary)" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+      </svg>
+
+      <svg class="gusion-dagger gusion-dagger-3" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 5L58 35L88 35L64 53L73 83L50 65L27 83L36 53L12 35L42 35L50 5Z" fill="url(#dagger-gradient-glow)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       APP NAVIGATION HEADER
+       ========================================================================== -->
+  <header class="app-header" id="appHeader">
+    <div class="header-container">
+      <a href="#" class="logo" id="logoLink">
+        <i class="fa-solid fa-gamepad" style="font-size: 2.1rem; color: var(--primary); filter: drop-shadow(0 0 10px var(--primary-glow)); transition: color var(--transition-speed) ease, filter var(--transition-speed) ease;"></i>
+        <marquee direction="left" scrollamount="4" class="logo-marquee">PAREXXSHOP ALL GAME</marquee>
+      </a>
+      
+      <!-- Interactive Gusion Skin Switcher -->
+      <div class="skin-selector-hub">
+        <button class="skin-btn" data-skin="default" id="btn-skin-default" title="Activate Gusion Holy Blade Theme">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Default
+        </button>
+        <button class="skin-btn" data-skin="cosmic" id="btn-skin-cosmic" title="Activate Legend Cosmic Gleam Theme">
+          <i class="fa-solid fa-moon"></i> Legend
+        </button>
+        <button class="skin-btn active" data-skin="kof" id="btn-skin-kof" title="Activate KOF K' Volcanic Theme">
+          <i class="fa-solid fa-fire-flame-curved"></i> KOF K'
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN PORTAL CONTAINER
+       ========================================================================== -->
+  <main class="main-wrapper">
+    
+    <!-- Hero Presentation -->
+    <section class="hero-banner">
+      <span class="hero-tag" id="tagline-badge">
+        <i class="fa-solid fa-fire"></i> Volcanic Theme Activated
+      </span>
+      <h1 class="hero-title" id="main-title">
+        <span>PAREXX SHOP</span> ALL GAME
+      </h1>
+      <p class="hero-desc" id="main-description">
+        Rasakan ledakan api vulkanik membara! Tema King of Fighters K' diaktifkan. Kecepatan transaksi secepat tebasan daggers berapi Gusion siap melayani Anda.
+      </p>
+    </section>
+
+    <!-- Interactive Search Dashboard -->
+    <section class="controls-hub">
+      <div class="search-box-wrap">
+        <input type="text" id="gameSearch" class="search-input" placeholder="Cari game atau voucher top-up (misal: Mobile Legends, Free Fire)..." autocomplete="off">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      
+      <div class="catalog-stats">
+        Total Catalog: <span id="catalogCount">0</span> Game
+      </div>
+    </section>
+
+    <!-- Dynamic Game Cards Catalog Grid -->
+    <section class="product-grid" id="catalogGrid">
+      <!-- Loading Skeleton Shimmer Elements -->
+      <div class="shimmer-card">
+        <div class="shimmer-banner"></div>
+        <div class="shimmer-line"></div>
+        <div class="shimmer-line short"></div>
+        <div class="shimmer-btn"></div>
+      </div>
+      <div class="shimmer-card">
+        <div class="shimmer-banner"></div>
+        <div class="shimmer-line"></div>
+        <div class="shimmer-line short"></div>
+        <div class="shimmer-btn"></div>
+      </div>
+      <div class="shimmer-card">
+        <div class="shimmer-banner"></div>
+        <div class="shimmer-line"></div>
+        <div class="shimmer-line short"></div>
+        <div class="shimmer-btn"></div>
+      </div>
+      <div class="shimmer-card">
+        <div class="shimmer-banner"></div>
+        <div class="shimmer-line"></div>
+        <div class="shimmer-line short"></div>
+        <div class="shimmer-btn"></div>
+      </div>
+      <div class="shimmer-card">
+        <div class="shimmer-banner"></div>
+        <div class="shimmer-line"></div>
+        <div class="shimmer-line short"></div>
+        <div class="shimmer-btn"></div>
+      </div>
+      <div class="shimmer-card">
+        <div class="shimmer-banner"></div>
+        <div class="shimmer-line"></div>
+        <div class="shimmer-line short"></div>
+        <div class="shimmer-btn"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       DYNAMIC DETAIL MODAL DIALOG
+       ========================================================================== -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-container">
+      <button class="modal-close-btn" id="modalClose" aria-label="Tutup dialog modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      
+      <div class="modal-body" id="modalBody">
+        <!-- Injected dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       PORTAL DISCLAIMER FOOTER
+       ========================================================================== -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <i class="fa-solid fa-gamepad" style="font-size: 1.8rem; color: var(--primary); filter: drop-shadow(0 0 8px var(--primary-glow)); transition: color var(--transition-speed) ease, filter var(--transition-speed) ease; margin-right: 8px;"></i>
+        <span id="footerBrand">PAREXXSHOP ALL GAME</span>
+      </div>
+      
+      <p class="footer-text">
+        Disclaimer: Website ini dikembangkan untuk keperluan portofolio, visualisasi desain UI/UX premium, dan demonstrasi API. Seluruh hak cipta logo game, judul produk, gambar, dan merek dagang adalah milik resmi dari masing-masing publisher game serta Coda Payments / Codashop Indonesia. Karakter 3D Gusion serta Mobile Legends dimiliki oleh Moonton.
+      </p>
+      
+      <ul class="footer-links">
+        <li><a href="https://www.codashop.com/id-id/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Codashop Resmi</a></li>
+        <li><a href="https://m.mobilelegends.com/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-gamepad"></i> Mobile Legends</a></li>
+        <li><a href="https://github.com/coda-payments" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Coda Github</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       LIBRARIES & CORE FRONTEND CONTROLLERS
+       ========================================================================== -->
+  <!-- Three.js WebGL rendering library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- GSAP Animation Engine for slick UI transitions -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <!-- Background WebGL logic & Mouse Parallax controllers -->
+  <script src="three-bg.js"></script>
+  
+  <!-- Main client controller & Catalog API manager -->
+  <script src="app.js"></script>
+
+</body>
+</html>
